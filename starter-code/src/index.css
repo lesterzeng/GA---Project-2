@@ -23,7 +23,13 @@ body {
 
 .loginButton {
   justify-content: center;
+  align-items: flex-end;
+  display: flex;
+  min-height: 50vh;
+}
+
+.playerControl {
+  justify-content: center;
   align-items: center;
   display: flex;
-  min-height: 100vh;
 }

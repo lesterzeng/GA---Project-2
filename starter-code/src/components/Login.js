@@ -1,23 +1,61 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
+import GetPlaylist from "./GetPlaylist";
 
-const CLIENT_ID = "f6a9fe478d264238a1f75783008c50aa";
-const REDIRECT_URI = "http://localhost:3000";
-const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
-const RESPONSE_TYPE = "token";
-// const AUTH_URL =
-//   "https://accounts.spotify.com/authorize?client_id=f6a9fe478d264238a1f75783008c50aa&response_type=token&redirect_uri=http://localhost:3000";
+const clientId = "f6a9fe478d264238a1f75783008c50aa";
+const redirectUrl = "http://localhost:3000";
+const authorizationUrl = "https://accounts.spotify.com/authorize";
+const responseType = "token";
+const scope = [
+  "user-modify-playback-state",
+  "user-read-playback-state",
+  "user-read-currently-playing",
+  "playlist-read-collaborative",
+  "playlist-modify-public",
+  "playlist-read-private",
+  "playlist-modify-private",
+  "user-read-email",
+  "user-read-private",
+  "app-remote-control",
+  "streaming",
+];
 
 const Login = () => {
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    console.log(hash);
+    let token = hash.substring(1).split("&")[0].split("=")[1];
+    console.log(token);
+
+    window.location.hash = "";
+    window.localStorage.setItem("token", token);
+    setToken(token);
+  }, []);
+
+  const handleLogout = () => {
+    setToken("");
+    window.localStorage.removeItem("token");
+  };
   return (
     <Container>
       <div className="loginButton">
-        <a
-          className="btn btn-lg"
-          href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}
-        >
-          Login to Spotify
-        </a>
+        {!token ? (
+          <a
+            className="btn btn-lg"
+            href={`${authorizationUrl}?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=${responseType}&scope=${scope.join(
+              " "
+            )}`}
+          >
+            Login to Spotify
+          </a>
+        ) : (
+          <div>
+            <GetPlaylist></GetPlaylist>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+        )}
       </div>
     </Container>
   );
