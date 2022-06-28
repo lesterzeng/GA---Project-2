@@ -18,10 +18,11 @@ const GetPlaylist = () => {
       .get(playlistUrl, {
         headers: {
           Authorization: "Bearer " + token,
-          //   "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
       })
       .then((response) => {
+        console.log(response);
         const { items } = response.data;
         const playlistsNames = items.map(({ name, id }) => {
           return { name, id };

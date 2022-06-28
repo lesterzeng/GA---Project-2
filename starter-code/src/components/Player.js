@@ -5,9 +5,10 @@ const playerButtonUrl = "https://api.spotify.com/v1/me/player/play";
 
 const Player = () => {
   const [token, setToken] = useState("");
-  const [playing, setPlaying] = useState("");
 
   useEffect(() => {
+    // console.log(`Player.js mounted`);
+
     if (localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
     }
@@ -15,18 +16,27 @@ const Player = () => {
 
   // Play button //////////////////////////////////////////////////////
 
-  const handlePlayButton = () => {
-    axios.get(playerButtonUrl, {
+  const handlePlayButton = async () => {
+    const data = {
+      context_uri: "spotify:playlist:6wd31yoyLFmkipjdX3j2ia",
+      offset: {
+        position: 5,
+      },
+      position_ms: 0,
+    };
+    const config = {
       headers: {
         Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
       },
-    });
-    console.log(handlePlayButton);
+    };
+
+    await axios.put(playerButtonUrl, data, config);
   };
 
   return (
     <div className="playerControl">
-      <h1>Player</h1>
+      <button onClick={handlePlayButton}>Play</button>
     </div>
   );
 };

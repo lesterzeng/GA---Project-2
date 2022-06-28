@@ -25,9 +25,9 @@ const Login = () => {
 
   useEffect(() => {
     const hash = window.location.hash;
-    console.log(hash);
+    // console.log(hash);
     let token = hash.substring(1).split("&")[0].split("=")[1];
-    console.log(token);
+    // console.log(token);
 
     window.location.hash = "";
     window.localStorage.setItem("token", token);
