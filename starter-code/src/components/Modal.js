@@ -1,32 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
+import ReactDOM from "react-dom";
 
-const Modal = () => {
+import styles from "./Modal.module.css";
+
+const DisplayImages = (props) => {
+  return (
+    <div className={styles.backdrop}>
+      <img
+        src={props.image}
+        width="640"
+        height="640"
+        onClick={props.onClick}
+      ></img>
+      <p>{props.name}</p>
+    </div>
+  );
+};
+
+const Modal = (props) => {
   return (
     <>
-      <div className="modalBackground">
-        <div className="modalContent">
-          <div className="closeBtn">
-            {/* <button onClick={() => props(false)}>X</button> */}
-          </div>
-          <div className="bigPicture">
-            <img></img>
-          </div>
-        </div>
-      </div>
-      {/* <button onClick={toggleModal} className="btn-modal">
-        Open
-      </button>
-      {modal && (
-        <div className="modal">
-          <div className="modalBackground"></div>
-          <div className="modalContent">
-            <img src=""></img>
-            <button className="closeBtn" onClick={toggleModal}>
-              Close
-            </button>
-          </div>
-        </div>
-      )} */}
+      {ReactDOM.createPortal(
+        <DisplayImages
+          onClick={props.onClick}
+          image={props.image}
+        ></DisplayImages>,
+        document.querySelector("#modal-root")
+      )}
     </>
   );
 };

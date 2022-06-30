@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Modal from "./Modal";
+import Display from "./Display";
 
 const playerButtonUrl = "https://api.spotify.com/v1/me/player/play";
 
-// const playlistData =
 const DisplayPlaylist = (props) => {
   const [token, setToken] = useState("");
   const [playlist, setPlaylist] = useState([]);
-  const [modal, setModal] = useState(false);
 
-  const toggleModal = () => {
-    setModal(!modal);
-  };
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
@@ -24,24 +19,13 @@ const DisplayPlaylist = (props) => {
   }, [props.playlist]);
 
   const getPlaylist = () => {
-    const displayPlaylist = props.playlist.map((item, id) => {
-      return (
-        <div key={id}>
-          <img
-            src={item.images[0].url}
-            width="250"
-            height="250"
-            className="playlistPictures"
-            onClick={toggleModal}
-          ></img>
-          <p>{item.name}</p>
-          <button onClick={handlePlayButton}>Play Playlist</button>
-        </div>
-      );
+    const imgArray = props.playlist.map((item, i) => {
+      return <Display image={item.images[0].url} key={i}></Display>;
     });
 
-    setPlaylist(displayPlaylist);
+    setPlaylist(imgArray);
   };
+
   const handlePlayButton = async () => {
     const data = {
       context_uri: "spotify:playlist:6wd31yoyLFmkipjdX3j2ia",
@@ -60,19 +44,7 @@ const DisplayPlaylist = (props) => {
     await axios.put(playerButtonUrl, data, config);
   };
 
-  return (
-    <>
-      {playlist}
-      {/* <button
-        onClick={() => {
-          setModal(true);
-        }}
-      >
-        Open
-      </button> */}
-      {!modal && <Modal />}
-    </>
-  );
+  return <>{playlist}</>;
 };
 
 export default DisplayPlaylist;
