@@ -4,11 +4,15 @@ import Modal from "./Modal";
 
 const playerButtonUrl = "https://api.spotify.com/v1/me/player/play";
 
+// const playlistData =
 const DisplayPlaylist = (props) => {
   const [token, setToken] = useState("");
   const [playlist, setPlaylist] = useState([]);
   const [modal, setModal] = useState(false);
 
+  const toggleModal = () => {
+    setModal(!modal);
+  };
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
@@ -28,6 +32,7 @@ const DisplayPlaylist = (props) => {
             width="250"
             height="250"
             className="playlistPictures"
+            onClick={toggleModal}
           ></img>
           <p>{item.name}</p>
           <button onClick={handlePlayButton}>Play Playlist</button>
@@ -58,13 +63,13 @@ const DisplayPlaylist = (props) => {
   return (
     <>
       {playlist}
-      <button
+      {/* <button
         onClick={() => {
           setModal(true);
         }}
       >
         Open
-      </button>
+      </button> */}
       {!modal && <Modal />}
     </>
   );

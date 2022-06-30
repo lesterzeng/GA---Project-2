@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 
-const Modal = (props) => {
-  const toggleModal = () => {
-    setModal(!modal);
-  };
-
+const Modal = () => {
   return (
     <>
       <div className="modalBackground">
         <div className="modalContent">
           <div className="closeBtn">
-            <button onClick={() => props(false)}>X</button>
+            {/* <button onClick={() => props(false)}>X</button> */}
+          </div>
+          <div className="bigPicture">
+            <img></img>
           </div>
         </div>
       </div>

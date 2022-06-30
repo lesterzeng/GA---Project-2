@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DisplayPlaylist from "./DisplayPlaylist";
+import { Modal } from "react-bootstrap";
 
 const playlistUrl = "https://api.spotify.com/v1/me/playlists";
 
@@ -41,6 +42,8 @@ const GetPlaylist = () => {
 
       <button onClick={handleGetPlaylistsData}>Get Playlists</button>
       <DisplayPlaylist playlist={data}></DisplayPlaylist>
+
+      <Modal />
     </>
   );
 };
