@@ -20,7 +20,9 @@ const DisplayPlaylist = (props) => {
 
   const getPlaylist = () => {
     const imgArray = props.playlist.map((item, i) => {
-      return <Display image={item.images[0].url} key={i}></Display>;
+      return (
+        <Display image={item.images[0].url} key={i} name={item.name}></Display>
+      );
     });
 
     setPlaylist(imgArray);
