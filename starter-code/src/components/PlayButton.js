@@ -7,13 +7,10 @@ const Player = () => {
   const [token, setToken] = useState("");
 
   useEffect(() => {
-    // console.log(`Player.js mounted`);
-
     if (localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
     }
   }, []);
-
   // Play button //////////////////////////////////////////////////////
 
   const handlePlayButton = async () => {

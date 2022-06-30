@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
-import GetPlaylist from "./GetPlaylist";
 
 const clientId = "f6a9fe478d264238a1f75783008c50aa";
 const redirectUrl = "http://localhost:3000";
@@ -25,9 +24,9 @@ const Login = () => {
 
   useEffect(() => {
     const hash = window.location.hash;
-    // console.log(hash);
+    console.log(hash);
     let token = hash.substring(1).split("&")[0].split("=")[1];
-    // console.log(token);
+    console.log(token);
 
     window.location.hash = "";
     window.localStorage.setItem("token", token);
@@ -52,7 +51,6 @@ const Login = () => {
           </a>
         ) : (
           <div>
-            <GetPlaylist></GetPlaylist>
             <button onClick={handleLogout}>Logout</button>
           </div>
         )}

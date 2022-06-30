@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import DisplayPlaylist from "./DisplayPlaylist";
 
 const playlistUrl = "https://api.spotify.com/v1/me/playlists";
 
 const GetPlaylist = () => {
   const [token, setToken] = useState("");
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -22,10 +23,9 @@ const GetPlaylist = () => {
         },
       })
       .then((response) => {
-        console.log(response);
         const { items } = response.data;
-        const playlistsNames = items.map(({ name, id }) => {
-          return { name, id };
+        const playlistsNames = items.map(({ name, id, images }) => {
+          return { name, id, images };
         });
         setData(playlistsNames);
       })
@@ -36,9 +36,12 @@ const GetPlaylist = () => {
   console.log(data);
 
   return (
-    <div>
+    <>
+      <h2>Your Playlists</h2>
+
       <button onClick={handleGetPlaylistsData}>Get Playlists</button>
-    </div>
+      <DisplayPlaylist playlist={data}></DisplayPlaylist>
+    </>
   );
 };
 
